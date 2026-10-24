@@ -1,0 +1,21 @@
+databases:
+  - name: party-bingo-db
+    plan: free
+    region: frankfurt
+
+services:
+  - type: web
+    name: party-bingo
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: party-bingo-db
+          property: connectionString
